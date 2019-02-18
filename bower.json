@@ -1,10 +1,10 @@
 {
     "name": "adapt-asssessmentKeepCorrect",
-    "repository": "git://github.com/KingsOnline/adapt-google-analytics",
+    "repository": "git://github.com/simondate/adapt-asssessmentKeepCorrect",
     "framework": ">=2.0.0",
-    "version": "1.0.6",
-    "displayName": "Google Analytics",
-    "extension": "Google Analytics",
+    "version": "1.0.0",
+    "displayName": "Assessment keep correct",
+    "extension": "Assessment keep correct",
     "description": "Keep correct answers in assessment",
     "main": "/js/adapt-asssessmentKeepCorrect.js",
     "keywords": [
@@ -15,6 +15,6 @@
         "Simon Date"
     ],
     "license": "GPL-3.0",
-    "homepage": "https://github.com/KingsOnline/adapt-google-analytics",
-    "targetAttribute": "_googleAnalytics"
+    "homepage": "https://github.com/simondate/adapt-asssessmentKeepCorrect",
+    "targetAttribute": "_asssessmentKeepCorrect"
 }

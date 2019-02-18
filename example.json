@@ -1,5 +1,4 @@
-//config.json
-  "_googleAnalytics": {
-      "_isEnabled": true,
-      "_identifier": "your Google Analytics code here"
+//course.json
+  "_assessmentKeepCorrect": {
+      "_isEnabled": true
   }

@@ -12,24 +12,17 @@
         "config": {
           "type": "object",
           "properties": {
-            "_googleAnalytics": {
+            "_assessmentKeepCorrect": {
               "type": "object",
               "required": false,
-              "legend": "Google Analytics",
+              "legend": "Keep correct results",
               "properties": {
                 "_isEnabled": {
                   "type": "boolean",
                   "default": true,
-                  "title": "Enable Google Analytics",
+                  "title": "Enable keep correct",
                   "inputType": "Checkbox",
-                  "help": "Turn off and republish to stop tracking a course"
-                },
-                "_identifier": {
-                  "type": "string",
-                  "require": true,
-                  "title": "Identifer code",
-                  "inputType": "Text",
-                  "help": "You can find this on the Google Analytics website"
+                  "help": "Any correct answers in an assessment are kept in retry"
                 }
               }
             }
