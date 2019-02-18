@@ -3,7 +3,7 @@ define(["coreJS/adapt"], function(Adapt) {
   var Adapt = require('coreJS/adapt');
   var Backbone = require('backbone');
 
-  var asssessmentKeepCorrect = Backbone.Model.extend({
+  var assessmentKeepCorrect = Backbone.Model.extend({
 
     initialize: function() {
       this.listenTo(Adapt, 'assessments:reset', this.reset);
@@ -56,8 +56,8 @@ define(["coreJS/adapt"], function(Adapt) {
 
   Adapt.once("app:dataReady", function() {
     if(!Adapt.course.get('_assessmentKeepCorrect') || !Adapt.course.get('_assessmentKeepCorrect')._isEnabled) return;
-    new asssessmentKeepCorrect();
+    new assessmentKeepCorrect();
   });
 
-  return asssessmentKeepCorrect;
+  return assessmentKeepCorrect;
 });
