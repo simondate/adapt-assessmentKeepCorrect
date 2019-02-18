@@ -1,12 +1,12 @@
 {
-    "name": "adapt-asssessmentKeepCorrect",
-    "repository": "git://github.com/simondate/adapt-asssessmentKeepCorrect",
+    "name": "adapt-assessmentKeepCorrect",
+    "repository": "git://github.com/simondate/adapt-assessmentKeepCorrect",
     "framework": ">=2.0.0",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "displayName": "Assessment keep correct",
     "extension": "Assessment keep correct",
     "description": "Keep correct answers in assessment",
-    "main": "/js/adapt-asssessmentKeepCorrect.js",
+    "main": "/js/adapt-assessmentKeepCorrect.js",
     "keywords": [
         "adapt-plugin",
         "adapt-extension"
@@ -15,6 +15,6 @@
         "Simon Date"
     ],
     "license": "GPL-3.0",
-    "homepage": "https://github.com/simondate/adapt-asssessmentKeepCorrect",
-    "targetAttribute": "_asssessmentKeepCorrect"
+    "homepage": "https://github.com/simondate/adapt-assessmentKeepCorrect",
+    "targetAttribute": "_assessmentKeepCorrect"
 }
