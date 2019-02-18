@@ -5,10 +5,6 @@ define(["coreJS/adapt"], function(Adapt) {
 
   var asssessmentKeepCorrect = Backbone.Model.extend({
 
-    className: "extension",
-
-
-
     initialize: function() {
       console.log(this);
       this.listenTo(Adapt, 'assessments:reset', this.reset);
@@ -18,36 +14,52 @@ define(["coreJS/adapt"], function(Adapt) {
 
     pageReload: function() {
       console.log('page reload');
+      var context = this;
       if(!this.questions || !this.reset) return;
       this.reset = false;
+      console.log(this.assessmentModel);
       _.each(this.questions, function(question, index) {
         console.log(index)
         if(question._isCorrect) {
-          var componentModel = Adapt.findById(question._id);
-          console.log('question correct');
-          console.log(question._id);
-          console.log(componentModel);
-          componentModel.set('_isCorrect', true);
-          componentModel.set('_isSubmitted', true);
-          $('.' + question._id).addClass('answered-correct');
+          context.setCorrect(question._id);
         } else {
           console.log('question incorrect')
         }
       });
     },
 
+    setCorrect: function(questionId) {
+      var componentModel = Adapt.findById(questionId);
+      console.log(questionId);
+      componentModel.set('_isCorrect', true);
+      componentModel.set('_isSubmitted', true);
+      componentModel.set('_isInteractionComplete', true);
+      $('.' + questionId).find('.component-widget').addClass('disabled complete submitted show-user-answer');
+      $('.' + questionId).find('label').addClass('disabled');
+      $('.' + questionId).find('button').addClass('disabled');
+      $('.' + questionId).find('select2').addClass('disabled');
+      _.each(componentModel.get('_items'), function(item, index){
+          var $itemLabel = $('.' + questionId).find('label').eq(index);
+          var $itemInput = $('.' + questionId).find('input').eq(index);
+          console.log($itemLabel);
+          $itemLabel.addClass('disabled');
+          $itemInput.prop('disabled', true);
+          if(item._shouldBeSelected) {
+            $itemLabel.addClass('selected');
+
+            console.log($itemLabel);
+          }
+      });
+    },
+
     reset: function(state, model) {
-      this.reset = true;
       if(!this.questions) return;
-      console.log(this.questions);
-      console.log(state);
-      console.log(model);
+      this.reset = true;
     },
 
     complete: function(state, model) {
-      console.log(state)
-      console.log(model)
       this.questions = state.questions;
+      this.assessmentModel = model;
     }
   });
 
