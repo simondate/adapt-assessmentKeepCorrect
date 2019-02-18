@@ -2,7 +2,7 @@
     "name": "adapt-asssessmentKeepCorrect",
     "repository": "git://github.com/simondate/adapt-asssessmentKeepCorrect",
     "framework": ">=2.0.0",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "displayName": "Assessment keep correct",
     "extension": "Assessment keep correct",
     "description": "Keep correct answers in assessment",
