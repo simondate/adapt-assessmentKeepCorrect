@@ -48,8 +48,12 @@ define(["coreJS/adapt"], function(Adapt) {
     },
 
     complete: function(state, model) {
-      this.questions = state.questions;
-      this.assessmentModel = model;
+      if(state.isPass) {
+        $('.hideUntilPass').show();
+      } else {
+        this.questions = state.questions;
+        this.assessmentModel = model;
+      }
     }
   });
 
