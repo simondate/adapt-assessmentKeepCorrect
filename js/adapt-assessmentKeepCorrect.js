@@ -30,7 +30,8 @@ define(["coreJS/adapt"], function(Adapt) {
       $('.' + questionId).find('.component-widget').addClass('disabled complete submitted show-user-answer');
       $('.' + questionId).find('label').addClass('disabled');
       $('.' + questionId).find('button').addClass('disabled');
-      $('.' + questionId).find('select2').addClass('disabled');
+      $('.' + questionId).find('.mcq-correct-icon').show();
+      $('.' + questionId).find('select2').addClass('disabled select2-container--disabled');
       _.each(componentModel.get('_items'), function(item, index){
           var $itemLabel = $('.' + questionId).find('label').eq(index);
           var $itemInput = $('.' + questionId).find('input').eq(index);
