@@ -41,6 +41,7 @@ define(["coreJS/adapt"], function(Adapt) {
           $itemInput.prop('disabled', true);
           if (item._shouldBeSelected) {
             $itemLabel.addClass('selected');
+            $($itemLabel).find('.mcq-correct-icon').show();
           }
         });
       } else {
@@ -68,6 +69,7 @@ define(["coreJS/adapt"], function(Adapt) {
               $($component).find('.select2-selection__placeholder').eq(itemIndex).text(option.text);
               $options.eq(optionIndex + 1).prop('selected', true);
             }
+            $($component).find('.icon-tick').show();
           });
         }
       });
