@@ -1,92 +1,27 @@
 define(["coreJS/adapt"], function(Adapt) {
+  Adapt.once("adapt:initialize", function() {
+    var article = require('extensions/adapt-contrib-assessment/js/adapt-assessmentArticleModel');
+    Adapt.articles.forEach(function(article) {
+      if (!article._resetQuestions) return;
+      article._resetQuestions = function(callback) {
+        var assessmentConfig = this.getConfig();
+        var syncIterations = 1; // number of synchronous iterations to perform
+        var i = 0,
+          qs = this._currentQuestionComponents,
+          len = qs.length;
 
-  var Adapt = require('coreJS/adapt');
-  var Backbone = require('backbone');
-
-  var assessmentKeepCorrect = Backbone.Model.extend({
-
-    initialize: function() {
-      this.listenTo(Adapt, 'assessments:complete', this.complete);
-      this.listenTo(Adapt, 'pageView:ready', this.pageReload);
-    },
-
-    pageReload: function() {
-      var context = this;
-      if (!this.questions) return;
-      _.each(this.questions, function(question, index) {
-        if (question._isCorrect) {
-          context.setCorrect(question._id);
-        }
-      });
-    },
-
-    setCorrect: function(questionId) {
-      var componentModel = Adapt.findById(questionId);
-      componentModel.set('_isCorrect', true);
-      componentModel.set('_isSubmitted', true);
-      componentModel.set('_isInteractionComplete', true);
-      var $component = $('.' + questionId);
-      $component.find('.component-widget').addClass('disabled complete submitted show-user-answer');
-      $component.find('label').addClass('disabled');
-      $component.find('button').addClass('disabled');
-      $component.find('label.selected').find('.mcq-correct-icon').show();
-      if (componentModel.get('_component') === 'mcq') {
-        _.each(componentModel.get('_items'), function(item, index) {
-          var $itemLabel = $component.find('label').eq(index);
-          var $itemInput = $component.find('input').eq(index);
-          $itemLabel.addClass('disabled');
-          $itemInput.prop('disabled', true);
-          if (item._shouldBeSelected) {
-            $itemLabel.addClass('selected');
-            $($itemLabel).find('.mcq-correct-icon').show();
+        function step() {
+          for (var j = 0, count = Math.min(syncIterations, len - i); j < count; i++, j++) {
+            var question = qs[i];
+            if (question.get('_isCorrect')) continue;
+            question.reset(assessmentConfig._questions._resetType, true);
           }
-        });
-      } else {
-        this.answerMatching($component, componentModel);
-        $component.find('.matching-item').css('pointer-events','none');
-      }
 
-    },
-
-    answerMatching: function($component, componentModel) {
-      _.each(componentModel.get('_items'), function(item, itemIndex) {
-        var $select = $($component).find('select').eq(itemIndex);
-        var $options = $select.find('option');
-        var noCorrectOptions = _.where(item._options, {
-          '_isCorrect': true
-        }).length == 0;
-
-        if (noCorrectOptions) {
-          if ($select.prop('selectedIndex') <= 0) {
-            $options.eq(_.random(item._options.length - 1) + 1).prop('selected', true);
-          }
-        } else {
-          _.each(item._options, function(option, optionIndex) {
-            if (option._isCorrect) {
-              $($component).find('.select2-selection__placeholder').eq(itemIndex).text(option.text);
-              $options.eq(optionIndex + 1).prop('selected', true);
-            }
-            $($component).find('.icon-tick').show();
-          });
+          i == len ? callback() : setTimeout(step);
         }
-      });
-    },
 
-    complete: function(state, model) {
-      if (state.isPass) {
-        $('.hideUntilPass').show();
-      } else {
-        this.questions = state.questions;
-        this.assessmentModel = model;
+        step();
       }
-    }
+    });
   });
-
-
-  Adapt.once("app:dataReady", function() {
-    if (!Adapt.course.get('_assessmentKeepCorrect') || !Adapt.course.get('_assessmentKeepCorrect')._isEnabled) return;
-    new assessmentKeepCorrect();
-  });
-
-  return assessmentKeepCorrect;
 });
